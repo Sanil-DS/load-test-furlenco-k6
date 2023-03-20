@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "68ea70bf-2487-4043-b7da-53dcf7842cba",
+		"name": "LoadTestPromiseDate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25155919"
+	},
+	"item": [
+		{
+			"name": "calculatePromiseDate Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"random_cft\",Math.floor(Math.random() * 200) + 10)",
+							"pm.environment.set(\"random_floor\",Math.floor(Math.random() * 15) + 2)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"carrier\": \"GARUDA\",\n    \"fulfillmentCenterId\": 1,\n    \"fcLeadTimeInDays\": {{random_floor}},\n    \"cartItemGroups\": [\n        {\n            \"id\": {{random_floor}},\n            \"vertical\": \"FURLENCO_RENTAL\",\n            \"cartItems\": [\n                {\n                    \"id\": {{random_floor}},\n                    \"logisticsType\": \"DELIVERY\",\n                    \"spatialRequirementInCft\": \"{{random_cft}}\",\n                    \"temporalDetails\": {\n                        \"installationTimeInMinutes\": 10,\n                        \"uninstallationTimeInMinutes\": 10\n                    }\n                }\n            ]\n        }\n       \n    ],\n    \"locationDetails\": {\n        \"pincode\": 560068,\n        \"residenceType\": \"RENTED\",\n        \"accommodationType\": \"APARTMENT\",\n        \"serviceLiftIsAvailable\": true,\n        \"floor\": {{random_floor}},\n        \"paperworkIsRequired\": null\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v2/promise-dates/calculate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"promise-dates",
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

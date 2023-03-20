@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "2cd7ad89-c170-4915-97ff-92b40e6d3749",
+		"name": "LoadTestCapcity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25155919"
+	},
+	"item": [
+		{
+			"name": "capacity-commitment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"random_cap\",Math.floor(Math.random() * 90000) + 10000)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"spatialRequirementInCft\": \"70.28\",\n  \"temporalRequirementInMinutes\": 800,\n  \"sharedTemporalRequirementInMinutes\": 72,\n  \"deliveryCapacityCounter\": 1,\n  \"pickupCapacityCounter\": 1,\n  \"entityId\": {{random_cap}},\n  \"pincode\": 560068,\n  \"fulfillmentCenterId\": 2,\n  \"vertical\": \"FURLENCO_RENTAL\",\n  \"carrier\": \"GARUDA\",\n  \"selectedPromiseDate\": \"2023-03-19\",\n  \"logisticsType\": \"DELIVERY\",\n  \"addressId\": {{random_cap}},\n  \"entityType\": \"ITEM\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/capacity-commitment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"capacity-commitment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
