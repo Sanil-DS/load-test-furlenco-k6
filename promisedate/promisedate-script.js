@@ -5,7 +5,7 @@ import "./libs/shim/urijs.js";
 import { sleep } from "k6";
 
 export let options = {
-  vus: 2,
+  vus: 10,
   duration: '60s',
   ext: {
     loadimpact: {
@@ -34,8 +34,7 @@ export default function () {
     id: "3c9497d4-0d4f-416f-a4c8-3beab5469233",
     method: "POST",
     address: "{{url}}/api/v2/promise-dates/calculate",
-    data:
-      '{\n    "carrier": "GARUDA",\n    "fulfillmentCenterId": 1,\n    "fcLeadTimeInDays": {{random_floor}},\n    "cartItemGroups": [\n        {\n            "id": {{random_floor}},\n            "vertical": "FURLENCO_RENTAL",\n            "cartItems": [\n                {\n                    "id": {{random_floor}},\n                    "logisticsType": "DELIVERY",\n                    "spatialRequirementInCft": "{{random_cft}}",\n                    "temporalDetails": {\n                        "installationTimeInMinutes": 10,\n                        "uninstallationTimeInMinutes": 10\n                    }\n                }\n            ]\n        }\n       \n    ],\n    "locationDetails": {\n        "pincode": 560068,\n        "residenceType": "RENTED",\n        "accommodationType": "APARTMENT",\n        "serviceLiftIsAvailable": true,\n        "floor": {{random_floor}},\n        "paperworkIsRequired": null\n    }\n}',
+    data:'{"carrier": "GARUDA","fulfillmentCenterId": 1,"fcLeadTimeInDays": 2,"cartItemGroups": [{"id": {{random_floor}},"vertical": "FURLENCO_RENTAL","cartItems": [{"id": {{random_floor}},"logisticsType": "DELIVERY","spatialRequirementInCft": "{{random_cft}}","temporalDetails": {"installationTimeInMinutes": 10,"uninstallationTimeInMinutes": 10}}]}   ],"locationDetails": {"pincode": 560068,"residenceType": "RENTED","accommodationType": "APARTMENT","serviceLiftIsAvailable": true,"floor": {{random_floor}},"paperworkIsRequired": null}}',
     headers: {
       "Content-Type": "application/json"
     },
@@ -51,5 +50,5 @@ export default function () {
         console.log(`[${pm.response.code}]  :: ${JSON.stringify(JSON.parse(responseBody))}`);
     }
   });
-  sleep(0.1)
+  // sleep(0.1)
 }

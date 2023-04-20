@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "eecc5ca6-d2a7-4e97-a434-da0fc32870df",
+		"name": "Cap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25155919"
+	},
+	"item": [
+		{
+			"name": "duplicate-capacity-commitment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"spatialRequirementInCft\": \"30\",\n  \"temporalRequirementInMinutes\": 10,\n  \"sharedTemporalRequirementInMinutes\": 180,\n  \"deliveryCapacityCounter\": 22,\n  \"pickupCapacityCounter\": 22,\n  \"entityId\": 600,\n  \"pincode\": 560075,\n  \"fulfillmentCenterId\": 1,\n  \"vertical\": \"FURLENCO_RENTAL\",\n  \"carrier\": \"GARUDA\",\n  \"selectedPromiseDate\": \"2023-04-02\",\n  \"logisticsType\": \"DELIVERY\",\n  \"addressId\": 577957,\n  \"entityType\": \"ITEM\"\n}"
+				},
+				"url": {
+					"raw": "https://st-lms-api.furlenco.com/api/v1/capacity-commitment",
+					"protocol": "https",
+					"host": [
+						"st-lms-api",
+						"furlenco",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"capacity-commitment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

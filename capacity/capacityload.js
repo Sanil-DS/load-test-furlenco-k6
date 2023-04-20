@@ -8,7 +8,7 @@ export let options = {
   // stages: [
   //   { duration: "60s", target: 50 }
   // ],
-  vus: 5,
+  vus: 2,
   duration: '60s',
   ext: {
     loadimpact: {
@@ -37,7 +37,7 @@ export default function () {
     method: "POST",
     address: "{{url}}/api/v1/capacity-commitment",
     data:
-      '{\n  "spatialRequirementInCft": "2",\n  "temporalRequirementInMinutes": 2,\n  "sharedTemporalRequirementInMinutes": 2,\n  "deliveryCapacityCounter": 1,\n  "pickupCapacityCounter": 1,\n  "entityId": {{random_cap}},\n  "pincode": 560068,\n  "fulfillmentCenterId": 2,\n  "vertical": "FURLENCO_RENTAL",\n  "carrier": "GARUDA",\n  "selectedPromiseDate": "2023-03-21",\n  "logisticsType": "DELIVERY",\n  "addressId": {{random_cap}},\n  "entityType": "ITEM"\n}',
+      '{\n  "spatialRequirementInCft": "10",\n  "temporalRequirementInMinutes": 10,\n  "sharedTemporalRequirementInMinutes": 10,\n  "deliveryCapacityCounter": 1,\n  "pickupCapacityCounter": 1,\n  "entityId": {{random_cap}},\n  "pincode": 560068,\n  "fulfillmentCenterId": 1,\n  "vertical": "FURLENCO_RENTAL",\n  "carrier": "GARUDA",\n  "selectedPromiseDate": "2023-04-21",\n  "logisticsType": "PICKUP",\n  "addressId": {{random_cap}},\n  "entityType": "ITEM"\n}',
     headers: {
       accept: "*/*",
       "Content-Type": "application/json"
