@@ -45,7 +45,7 @@ export default function () {
     pre() {
       pm.environment.set(
         "random_cap",
-        Math.floor(Math.random() * 90000) + 10000
+        Math.floor(Math.random() * 9000000) + 1000000
       );
     },
     post(response) {

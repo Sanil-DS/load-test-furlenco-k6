@@ -1,0 +1,57 @@
+{
+	"id": "aeb6f0a8-5ffd-4b4a-879d-c4983b6be34e",
+	"name": "loadTestEnv",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://st-lms-api.furlenco.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "random_cap",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "random_cft",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "random_floor",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "random_capacity_cft",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "dateSfd",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "addressId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "entityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-04-24T15:26:56.809Z",
+	"_postman_exported_using": "Postman/10.12.11"
+}

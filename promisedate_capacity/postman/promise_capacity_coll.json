@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "483d8600-3370-46f5-bdd7-2a2a013083b6",
+		"name": "LoadTestRelease",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25155919"
+	},
+	"item": [
+		{
+			"name": "promise_dates_calculate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"const daysToAdd = 2;",
+							"const currentDate = new Date();",
+							"const newDate = new Date(currentDate.setDate(currentDate.getDate() + daysToAdd));",
+							"const formattedNewDate = newDate.toISOString().slice(0,10);",
+							"const responseData = pm.response.json();",
+							"const dateInResponse = responseData.cartItemGroups[0].items[0].datesAvailableToPromise[0].date;",
+							"",
+							"pm.test(`Validating promise date (${formattedNewDate})`, () => {",
+							"  pm.expect(dateInResponse).to.eql(formattedNewDate);",
+							"   pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"dateSfd\", dateInResponse);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"random_capacity_cft\",Math.floor(Math.random() * 10) + 99)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "furlenco_staging_ghost_token=; furlenco_staging_panem_token=U9R2om9dEgokhpHqkeWdZg8X"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fcLeadTimeInDays\": 2,\n    \"fulfillmentCenterId\": 1,\n    \"carrier\": \"GARUDA\",\n    \"cartItemGroups\": [\n        {\n            \"id\": 1,\n            \"vertical\": \"FURLENCO_RENTAL\",\n            \"cartItems\": [\n                {\n                    \"id\": 1,\n                    \"logisticsType\": \"PICKUP\",\n                    \"spatialRequirementInCft\": \"{{random_capacity_cft}}\",\n                    \"temporalDetails\": {\n                        \"installationTimeInMinutes\": 25,\n                        \"repairTimeInMinutes\": 0,\n                        \"uninstallationTimeInMinutes\": 25\n                    }\n                }\n            ]\n        }\n    ],\n    \"locationDetails\": {\n        \"accommodationType\": \"APARTMENT\",\n        \"floor\": 1,\n        \"paperworkIsRequired\": false,\n        \"pincode\": 560110,\n        \"residenceType\": null,\n        \"serviceLiftIsAvailable\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v2/promise-dates/calculate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"promise-dates",
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "capacity_commitment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"addressId\",Math.floor(Math.random() * 90000) + 10000)",
+							"function generateRandomNumber() {",
+							"  let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];",
+							"  let result = 0;",
+							"  // Shuffle the array of digits using Fisher-Yates algorithm",
+							"  for (let i = digits.length - 1; i > 0; i--) {",
+							"    const j = Math.floor(Math.random() * (i + 1));",
+							"    [digits[i], digits[j]] = [digits[j], digits[i]];",
+							"  }",
+							"  for (let i = 0; i < 10; i++) {",
+							"    result += digits[i] * Math.pow(10, 9 - i);",
+							"  }",
+							"  return result;",
+							"}",
+							"const entityId=generateRandomNumber();",
+							"console.log(entityId)",
+							"pm.environment.set(\"entityId\",entityId)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"spatialRequirementInCft\": \"70.28\",\n  \"temporalRequirementInMinutes\": 25,\n  \"sharedTemporalRequirementInMinutes\": 30,\n  \"deliveryCapacityCounter\": 1,\n  \"pickupCapacityCounter\": 1,\n  \"entityId\": {{entityId}},\n  \"pincode\": 560110,\n  \"fulfillmentCenterId\": 1,\n  \"vertical\": \"FURLENCO_RENTAL\",\n  \"carrier\": \"GARUDA\",\n  \"selectedPromiseDate\": \"{{dateSfd}}\",\n  \"logisticsType\": \"DELIVERY\",\n  \"addressId\": {{addressId}},\n  \"entityType\": \"ITEM\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/capacity-commitment",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"capacity-commitment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
