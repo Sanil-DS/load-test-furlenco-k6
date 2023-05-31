@@ -1,0 +1,205 @@
+{
+	"id": "c310c00f-53d4-4f87-b2ea-bcd5f5b3b2ea",
+	"name": "Order-Runner-STG",
+	"values": [
+		{
+			"key": "pincode",
+			"value": "560075",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "latitude",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "longitude",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "url",
+			"value": "https://st-ciago.furlenco.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ghost_token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "x-panem-token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "cartID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "deliveryAddressID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "paymentID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "paymentAmount",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "orderID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "cartCheckOutID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "orderDisplayID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "personelID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "x-gatekeeper-token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "citiID",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "mozart",
+			"value": "https://st-mozart.furlenco.com",
+			"enabled": true
+		},
+		{
+			"key": "fortknox",
+			"value": "https://st-fortknox.furlenco.com",
+			"enabled": true
+		},
+		{
+			"key": "LMS_URL",
+			"value": "https://st-lms-api.furlenco.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "random_cap",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "phoneNumber2",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "productID_1",
+			"value": "17",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_2",
+			"value": "122",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_3",
+			"value": "110",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_4",
+			"value": "107",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_5",
+			"value": "116",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_6",
+			"value": "101",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_7",
+			"value": "23",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_8",
+			"value": "35",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_9",
+			"value": "113",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_10",
+			"value": "20",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "productID_11",
+			"value": "29",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-05-23T07:10:34.619Z",
+	"_postman_exported_using": "Postman/10.13.5"
+}

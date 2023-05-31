@@ -1,0 +1,779 @@
+{
+	"info": {
+		"_postman_id": "c84d386f-7b77-484e-b8d4-99fc7a0d01b3",
+		"name": "EVOLVE - LOAD TEST-RUNNER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25155919"
+	},
+	"item": [
+		{
+			"name": "create-user-order",
+			"item": [
+				{
+					"name": "0.0 Meta",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"delete pm.request.headers.remove(\"x-panem-token\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"ghost_token\", jsonData.data.meta.ghost_user.ghost_identifier);",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-city-id",
+								"value": "{{citiID}}"
+							},
+							{
+								"key": "x-pincode",
+								"value": "{{pincode}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/meta",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"meta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "0.1 - Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomNumber = Math.floor(Math.random() * 900000000) + 100000000;",
+									"const phoneNumber = \"9\" + randomNumber.toString();",
+									"postman.setEnvironmentVariable(\"phoneNumber2\", phoneNumber);",
+									"delete pm.request.headers.remove(\"x-panem-token\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-ghost-identifier",
+								"value": "{{ghost_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{phoneNumber2}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/users/verify-account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"verify-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "0.2 otp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"delete pm.request.headers.remove(\"x-panem-token\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-ghost-identifier",
+								"value": "{{ghost_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{phoneNumber2}}\",\n  \"otp\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/users/verify-otp",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "0.3 register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"x-panem-token\", jsonData.data.user.session_token.token);",
+									"postman.setEnvironmentVariable(\"userId\", jsonData.data.user.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"delete pm.request.headers.remove(\"x-panem-token\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-ghost-identifier",
+								"value": "{{ghost_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"contact_no\": \"{{phoneNumber2}}\",\n  \"email_id\": \"destroyer_san5-{{phoneNumber2}}@furlenco.com\",\n  \"name\": \"destroyer_san5-{{$randomFirstName}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/users/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. get-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"cartID\", jsonData.data.cart.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_ghost_token=jN67aEWZcS3erHFSyp2qpniK",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/carts?cityId={{citiID}}&pincode={{pincode}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "{{citiID}}"
+								},
+								{
+									"key": "pincode",
+									"value": "{{pincode}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. add-item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_ghost_token=jN67aEWZcS3erHFSyp2qpniK",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n     \"id\": {{productID_1}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_2}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_3}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_4}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_5}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_6}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_7}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_8}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_9}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_10}},\n     \"tenure\":12\n  },\n  {\n     \"id\": {{productID_11}},\n     \"tenure\":12\n  }\n]"
+						},
+						"url": {
+							"raw": "{{mozart}}/furlenco-checkout/api/carts/{{cartID}}/bulkCartItems?pincode={{pincode}}&cityId={{citiID}}",
+							"host": [
+								"{{mozart}}"
+							],
+							"path": [
+								"furlenco-checkout",
+								"api",
+								"carts",
+								"{{cartID}}",
+								"bulkCartItems"
+							],
+							"query": [
+								{
+									"key": "pincode",
+									"value": "{{pincode}}"
+								},
+								{
+									"key": "cityId",
+									"value": "{{citiID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. add-address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"deliveryAddressID\", jsonData.data.deliveryAddress.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_ghost_token=jN67aEWZcS3erHFSyp2qpniK",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"name\": \"HOK-HEAD\",\n    \"line1\": \"HOK\",\n    \"line2\": \"HOK\",\n    \"line3\": \"HOK\",\n    \"address\":\"HOK-TECH\",\n    \"contact_no\": \"{{phoneNumber2}}\",\n    \"city_name\": \"HOK CITY\",\n    \"pincode\": \"{{pincode}}\",\n    \"latitude\": {{latitude}},\n    \"longitude\": {{longitude}},\n    \"email_id\": \"destroyer-sanil@gmail.com\",\n    \"city_id\": {{citiID}},\n    \"floor\": 4,\n    \"service_lift_available\": false,\n    \"accommodation_type\":\"independent_house\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/users/addresses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. add-address-to-cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { ",
+									"    pm.response.to.have.status(200);",
+									"   });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_ghost_token=jN67aEWZcS3erHFSyp2qpniK",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"billingAddressId\": {{deliveryAddressID}},\n  \"shippingAddressId\": {{deliveryAddressID}},\n  \"activeCart\": \"ALL\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/carts/{{cartID}}?cityId={{citiID}}&pincode={{pincode}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"{{cartID}}"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "{{citiID}}"
+								},
+								{
+									"key": "pincode",
+									"value": "{{pincode}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. createPayment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () ",
+									"{ pm.response.to.have.status(200);",
+									"  ",
+									"   });",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"paymentID\", jsonData.data.paymentDetails.id);",
+									"postman.setEnvironmentVariable(\"paymentAmount\", jsonData.data.paymentDetails.amount);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_panem_token={{ghost_token}}; furlenco_staging_ghost_token={{ghost_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gstin\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/carts/{{cartID}}/createPayment?cityId={{citiID}}&pincode={{pincode}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"{{cartID}}",
+								"createPayment"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "{{citiID}}"
+								},
+								{
+									"key": "pincode",
+									"value": "{{pincode}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. create-checkout-order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () ",
+									"{ pm.response.to.have.status(200);",
+									"  ",
+									"   });",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"orderID\", jsonData.data.order.orders[0].id);",
+									"postman.setEnvironmentVariable(\"cartCheckOutID\", jsonData.data.order.id);",
+									"postman.setEnvironmentVariable(\"orderDisplayID\",  jsonData.data.order.orders[0].displayId);",
+									"console.log(\"cartCheckOutID:  \"+ pm.environment.get(\"cartCheckOutID\"))",
+									"console.log(\"orderID:  \"+pm.environment.get(\"orderID\"))",
+									"console.log(\"displayId:  \"+pm.environment.get(\"orderDisplayID\"))",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco_staging_ghost_token={{ghost_token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/carts/{{cartID}}/create-checkout-order?cityId={{citiID}}&pincode={{pincode}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"{{cartID}}",
+								"create-checkout-order"
+							],
+							"query": [
+								{
+									"key": "cityId",
+									"value": "{{citiID}}"
+								},
+								{
+									"key": "pincode",
+									"value": "{{pincode}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () ",
+									"{ pm.response.to.have.status(200);",
+									"  ",
+									"   });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"COMPLETED\",\n  \"userActionType\": \"CART_CHECKOUT\",\n  \"publisherUUID\": \"{{$randomUUID}}\",\n  \"id\": \"{{paymentID}}\",\n  \"paid\": {\n    \"totalAmount\": \"{{paymentAmount}}\",\n    \"paymentOffers\": [\n      {\n        \"type\": \"NCEMI\",\n        \"amount\": \"717.01\"\n      }\n    ],\n    \"paymentInstruments\": {\n      \"CASH\": \"{{paymentAmount}}\",\n      \"FCASH\": \"0.00\"\n    }\n  },\n  \"paymentDetails\": {\n    \"id\": \"{{paymentID}}}\"\n  }\n}\n"
+						},
+						"url": {
+							"raw": "{{fortknox}}/debug/send-message/GRINGOTTS__PAYMENT_UPDATES",
+							"host": [
+								"{{fortknox}}"
+							],
+							"path": [
+								"debug",
+								"send-message",
+								"GRINGOTTS__PAYMENT_UPDATES"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8.KYC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () ",
+									"{ pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "furlenco-session-token=lh4fOSUdL87FVEOpz5-VFA.q_1DJwnHXtVchmICDvv1scIJbwA33RSA2TfugVngAOT5de0puzrY_eCeKPg_DDnR.1674488728126.86400000.yJkII_1xJj0x69l_E0Nt-et4-oNDAA300PGkdTcNUtk; furlenco_preproduction_panem_token=j3fLJnxiTpK7CFfbvv6VjadS; furlenco_staging_panem_token=3iwKdSvAuou7E8BUdk1rP4d1",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"kycState\": \"APPROVED\",\n    \"userId\": {{userId}},\n    \"publisherUUID\": \"{{$randomUUID}}\",\n    \"orderId\": \"{{orderID}}\"\n}"
+						},
+						"url": {
+							"raw": "{{fortknox}}/debug/send-message/DELPHI__KYC_UPDATES",
+							"host": [
+								"{{fortknox}}"
+							],
+							"path": [
+								"debug",
+								"send-message",
+								"DELPHI__KYC_UPDATES"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () ",
+									"{ pm.response.to.have.status(200);",
+									"pm.environment.set('x-panem-token', '');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-panem-token",
+								"value": "{{x-panem-token}}",
+								"type": "text"
+							},
+							{
+								"key": "x-city-id",
+								"value": "{{citiID}}",
+								"type": "text"
+							},
+							{
+								"key": "x-pincode",
+								"value": "{{pincode}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://st-ciago.furlenco.com/api/v1/users/logout",
+							"protocol": "https",
+							"host": [
+								"st-ciago",
+								"furlenco",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
